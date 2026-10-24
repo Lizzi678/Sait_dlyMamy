@@ -145,8 +145,8 @@
         <section>
             <h2>Видео</h2>
             <div class="video-wrap">
-                <video controls preload="metadata" playsinline poster="фото/mama.jpg">
-                    <source src="video.mp4" type="video/mp4" />
+                <video id="main-video" controls preload="metadata" playsinline poster="фото/mama.jpg">
+                    <source src="Video.mp4" type="video/mp4" />
                     Ваш браузер не поддерживает видео.
                 </video>
             </div>
@@ -198,7 +198,8 @@
             { src: "аудио/24.mp3", title: "Это всё — DDT" },
             { src: "аудио/25.mp3", title: "Я тебя люблю — Кватро" },
             { src: "аудио/26.mp3", title: "Трек 26" },
-            { src: "аудио/27.mp3", title: "Я у твоих ног — Nataliya Vlasova" }
+            { src: "аудио/27.mp3", title: "Я у твоих ног — Nataliya Vlasova" },
+            { src: "аудио/28.m4a", title: "Трек 28" }
         ];
 
         // ===== ПЛЕЕР =====
@@ -281,6 +282,17 @@
             currentIndex = (currentIndex - 1 + PLAYLIST.length) % PLAYLIST.length;
             if (isPlaying) playCurrent();
             else musicNow.textContent = PLAYLIST[currentIndex].title;
+        });
+
+        // ===== ВИДЕО: ставим музыку на паузу, чтобы не играли вместе =====
+        const mainVideo = document.getElementById('main-video');
+        mainVideo.addEventListener('play', () => {
+            if (isPlaying) {
+                isPlaying = false;
+                musicPlayer.classList.remove('playing');
+                musicIcon.textContent = '♪';
+                fadeTo(0, 500, () => audio.pause());
+            }
         });
 
         // ===== СЛАЙДЕР =====
